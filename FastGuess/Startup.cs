@@ -26,9 +26,9 @@ namespace FastGuess
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSpaStaticFiles(configuration =>
+            services.AddSpaStaticFiles(options =>
             {
-                configuration.RootPath = "ClientApp";
+                options.RootPath = Configuration.GetSection("Spa").GetValue<string>("path");
             });
         }
 
@@ -54,7 +54,7 @@ namespace FastGuess
                 if (env.IsDevelopment())
                     spa.Options.SourcePath = "ClientApp";
                 else
-                    spa.Options.SourcePath = "dist";
+                    spa.Options.SourcePath = Configuration.GetSection("Spa").GetValue<string>("path");
 
                 if (env.IsDevelopment())
                 {

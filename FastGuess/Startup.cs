@@ -30,6 +30,8 @@ namespace FastGuess
             {
                 options.RootPath = Configuration.GetSection("Spa").GetValue<string>("path");
             });
+
+            services.AddScoped<DatabaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

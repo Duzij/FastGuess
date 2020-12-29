@@ -10,7 +10,15 @@ namespace FastGuess
         public string Nickname { get; set; }
 
         public DateTime Date = DateTime.UtcNow;
-
         public int Score { get; set; }
+    }
+
+
+    public class ScoreRecord
+    {
+        public string Nickname { get; set; }
+
+        public DateTime Date = DateTime.UtcNow;
+        public UsedAnswers Answers { get; set; }
     }
 }

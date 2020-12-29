@@ -9,8 +9,11 @@
     "build-production": "NODE_ENV=production vue-cli-service build --mode production"
   },
   "dependencies": {
+    "awsm.css": "^3.0.7",
     "core-js": "^3.4.3",
-    "vue": "^2.6.10"
+    "postcss": "^8.2.1",
+    "vue": "^2.6.10",
+    "vue-router": "^3.4.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
@@ -30,7 +33,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "no-console": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }

@@ -1,9 +1,6 @@
 <template>
   <div>
-    <span>
-      <input type="checkbox" v-on:change="$emit('answer-selected', answer.answerText)">
-      <strong>{{answer.answerText}}</strong>  
-    </span>
+     <button type="submit" v-on:click="$emit('answer-selected', answer.answerText)">{{answer.answerText}}</button>
   </div>
 </template>
 
@@ -14,5 +11,8 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+button{
+  display: inline-flex;
+}
 </style>

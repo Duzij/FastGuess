@@ -11,5 +11,6 @@ namespace FastGuess
 
         public string Question { get; set; }
         public List<Answer> Answers { get; set; }
+
     }
 }

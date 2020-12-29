@@ -27,7 +27,7 @@ namespace FastGuess.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddScore(ScoreBoard scoreBoard)
+        public IActionResult AddScore(ScoreRecord scoreBoard)
         {
             using (var database = new DatabaseContext())
             {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace FastGuess.Controllers
 {
@@ -144,20 +145,35 @@ namespace FastGuess.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public IEnumerable<PictureMeta> Get()
+        [HttpPost]
+        public IActionResult GetNextPicture(UsedAnswers usedAnswers)
         {
-            var rng = new Random();
-            var list = new List<PictureMeta>();
-            while (list.Count <= 5)
+            if (usedAnswers.UserAnswersIds.Count >= Pictures.Length)
             {
-                var randomPic = Pictures[rng.Next(Pictures.Length)];
-                if (!list.Any(a => a.Id == randomPic.Id))
-                {
-                    list.Add(randomPic);
-                }
+                return BadRequest("Used pictures count is higher than pictures count on server");
             }
-            return list;
+
+            var rng = new Random();
+            var randomPic = GetRandomPic(rng);
+
+            while (usedAnswers.UserAnswersIds.Any(a => a.QuestionId == randomPic.Id))
+            {
+                randomPic = GetRandomPic(rng);
+            }
+
+            CalculateScore(usedAnswers.UserAnswersIds, randomPic);
+
+            return Ok(randomPic);
+
+            static PictureMeta GetRandomPic(Random rng)
+            {
+                return Pictures[rng.Next(Pictures.Length)];
+            }
+        }
+
+        private void CalculateScore(List<AnsweredQuestion> userAnswersIds, PictureMeta randomPic)
+        {
+            randomPic.Score = userAnswersIds.Sum(a => 100 / (int)a.msElapsed);
         }
     }
 }

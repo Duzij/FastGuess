@@ -2,6 +2,8 @@ import Vue from "vue"
 import Router from "vue-router"
 import Home from "@/views/Home"
 import Game from "@/views/Game"
+import ScoreBoard from "@/views/ScoreBoard"
+import ScoreBoardNew from "@/views/ScoreBoardNew"
 
 Vue.use(Router);
 

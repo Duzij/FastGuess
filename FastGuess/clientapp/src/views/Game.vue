@@ -7,7 +7,7 @@
     </div>
 
     <div v-if="picture" class="content">
-      <Timer v-on:timer-finished="getNextPicture" />
+      <Timer :key="timerKey" v-on:timer-finished="getNextPicture" />
       <Picture v-bind:picture="picture" v-on:answer-selected="getNextPicture" />
     </div>
   </div>
@@ -23,7 +23,8 @@ export default {
       picture: null,
       error: null,
       startTime: null,
-      score: null
+      score: null,
+      timerKey: 0
     };
   },
   components: {
@@ -42,6 +43,9 @@ export default {
     $route: "fetchData",
   },
   methods: {
+    forceRerenderTimer() {
+      this.timerKey += 1;
+    },
     getTimeElapsed() {
       var endTime = performance.now();
       var timeDiff = endTime - this.startTime; //in ms
@@ -56,15 +60,16 @@ export default {
         data.msElapsed = this.getTimeElapsed();
         this.data.UserAnswersIds.push(data);
         this.fetchData();
+        this.forceRerenderTimer();
       } else {
-        window.localStorage.setItem("pictures", this.data)
+        window.localStorage.setItem("pictures", JSON.stringify(this.data))
         this.$router.push("/score/new");
       }
     },
     fetchData() {
       this.error = null;
       this.loading = true;
-      fetch("http://localhost:5000/picture", {
+      fetch("http://localhost:5000/api/picture", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

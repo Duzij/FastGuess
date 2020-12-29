@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace FastGuess.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ScoreController : ControllerBase
     {
         private readonly ILogger<ScoreController> _logger;
@@ -20,18 +20,24 @@ namespace FastGuess.Controllers
             this.database = database;
         }
 
-        [HttpGet("exist/{nickname}")]
-        public IActionResult IsNicknameExists(string nickname)
-        {
-            return Ok(database.ScoreBoards.Any(a => a.Nickname == nickname));
-        }
-
         [HttpPost]
         public IActionResult AddScore(ScoreRecord scoreBoard)
         {
             using (var database = new DatabaseContext())
             {
-                database.ScoreBoards.Add(scoreBoard);
+                foreach (var item in scoreBoard.Answers.UserAnswersIds)
+                {
+                    var q = PictureMetaDb.Pictures.First(a => a.Id == item.QuestionId);
+                    var isQuestionCorrect = q.Answers.First(a => a.AnswerText == item.Answer).IsCorrect;
+
+                }
+
+                var score = new ScoreBoard()
+                {
+                    Nickname = scoreBoard.Nickname,
+                    Score = scoreBoard.Answers.UserAnswersIds.Sum(a => 100 / (int)a.msElapsed)
+                };
+                database.ScoreBoard.Add(score);
                 database.SaveChanges();
             }
 
@@ -41,7 +47,10 @@ namespace FastGuess.Controllers
         [HttpGet]
         public IEnumerable<ScoreBoard> Get()
         {
-            return database.ScoreBoards.ToList();
+            using (var database = new DatabaseContext())
+            {
+                return database.ScoreBoard.ToList();
+            }
         }
 
 

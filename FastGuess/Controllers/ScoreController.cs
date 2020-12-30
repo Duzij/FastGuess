@@ -25,18 +25,24 @@ namespace FastGuess.Controllers
         {
             using (var database = new DatabaseContext())
             {
+                var totalScore = 0;
+
                 foreach (var item in scoreBoard.Answers.UserAnswersIds)
                 {
                     var q = PictureMetaDb.Pictures.First(a => a.Id == item.QuestionId);
-                    var isQuestionCorrect = q.Answers.First(a => a.AnswerText == item.Answer).IsCorrect;
-
+                    var answer = q.Answers.FirstOrDefault(a => a.AnswerText == item.Answer);
+                    if (answer != null && answer.IsCorrect)
+                    {
+                        totalScore += (10000 / (int)item.msElapsed);
+                    }
                 }
 
                 var score = new ScoreBoard()
                 {
                     Nickname = scoreBoard.Nickname,
-                    Score = scoreBoard.Answers.UserAnswersIds.Sum(a => 100 / (int)a.msElapsed)
+                    Score = totalScore
                 };
+
                 database.ScoreBoard.Add(score);
                 database.SaveChanges();
             }
@@ -49,7 +55,7 @@ namespace FastGuess.Controllers
         {
             using (var database = new DatabaseContext())
             {
-                return database.ScoreBoard.ToList();
+                return database.ScoreBoard.OrderByDescending(a => a.Score).ToList();
             }
         }
 

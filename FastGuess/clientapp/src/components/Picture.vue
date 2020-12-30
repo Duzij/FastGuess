@@ -1,18 +1,20 @@
 <template>
   <div class="picture">
-    <h1>{{ picture.question }}</h1>
+    <h2>{{ picture.question }}</h2>
     <img :src="picture.base64" />
-    <Answer class="answers"
-      v-for="answer in picture.answers"
-      v-bind:key="answer.answerText"
-      v-bind:answer="answer"
-      v-on:answer-selected="$emit('answer-selected', answer.answerText)"
-    />
+    <div class="answers-containter">
+      <Answer
+        v-for="answer in picture.answers"
+        v-bind:key="answer.answerText"
+        v-bind:answer="answer"
+        v-on:answer-selected="$emit('answer-selected', answer.answerText)"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import Answer from "@/components/Answer"
+import Answer from "@/components/Answer";
 export default {
   props: {
     picture: {
@@ -20,23 +22,30 @@ export default {
       required: true,
     },
   },
-  components:{
-    Answer
-  }
+  components: {
+    Answer,
+  },
 };
 </script>
 
 
 <style>
-.picture h1{
-  margin: 1rem;
+.picture {
+  display: flex;
+  flex-direction: column;
 }
-
-.answers{
+.picture h2 {
+  margin: 1rem;
+  text-align: center;
+}
+.answers-containter {
+  width: 100%;
   display: inline-flex;
   justify-content: space-around;
   flex-wrap: nowrap;
-  width: 20%;
-  margin: 1rem;
+  margin: 2rem 0;
+}
+img {
+  max-width: 40rem;
 }
 </style>

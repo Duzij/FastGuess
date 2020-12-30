@@ -1,16 +1,25 @@
 <template>
-  <div>
+  <div class="score">
     <h1>ScoreBoard</h1>
+    <hr/>
     <table>
       <tr>
         <th>Nickname</th>
         <th>Date</th>
         <th>Score</th>
       </tr>
-      <tr v-for="user in data" v-bind:key="user.nickname">
-        <td>{{user.Nickname}}</td>
-        <td>{{user.Date}}</td>
-        <td>{{user.score}}</td>
+      <tr v-for="user in data" v-bind:key="user.id">
+        <td>{{ user.nickname }}</td>
+        <td>
+          {{
+            new Date(user.date).toLocaleDateString("en-US", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })
+          }}
+        </td>
+        <td>{{ user.score }}</td>
       </tr>
     </table>
   </div>
@@ -22,8 +31,17 @@ export default {
       data: "",
     };
   },
+  created() {
+    // fetch the data when the view is created and the data is
+    // already being observed
+    this.getScore();
+  },
+  watch: {
+    // call again the method if the route changes
+    $route: "getScore",
+  },
   methods: {
-    submitScore() {
+    getScore() {
       fetch("http://localhost:5000/api/score", {
         method: "GET", // or 'PUT'
       })
@@ -39,11 +57,12 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-.new_score_form{
-    width: 5rem;
-    height: 5rem;
-    background-color: bisque;
+.score{
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 }
 </style>

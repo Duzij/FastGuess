@@ -1,8 +1,10 @@
 <template>
-  <div class="new_score_form">
-    <h1>Your total score</h1>
-    <form @submit.prevent="submitScore">
-      <input type="text" v-model="nickname" />
+  <div>
+    <h1>Submit your score</h1>
+    <hr/>
+    <form @submit.prevent="submitScore" class="new_score_form">
+      <label>Nickname</label>
+      <input required type="text" v-model="nickname" />
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -22,6 +24,7 @@ export default {
       const data = {
         nickname: this.nickname,
         answers: JSON.parse(pictures),
+        date: null
       };
 
       console.log(data);
@@ -33,7 +36,7 @@ export default {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) =>  console.log(response))
         .then((data) => {
           console.log("Success:", data);
           this.$router.push("/score");
@@ -48,8 +51,6 @@ export default {
 
 <style scoped>
 .new_score_form {
-  width: 5rem;
-  height: 5rem;
-  background-color: bisque;
+  margin-top: 1rem;
 }
 </style>

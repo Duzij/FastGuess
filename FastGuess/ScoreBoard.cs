@@ -18,6 +18,7 @@ namespace FastGuess
 
     public class ScoreRecord
     {
+        [Required]
         public string Nickname { get; set; }
 
         public DateTime Date = DateTime.UtcNow;

@@ -1,6 +1,6 @@
 <template>
   <div class="timer">
-    <h1 v-if="msg">{{ msg }} s</h1>
+    <h3>{{ msg }}</h3>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ export default {
   name: "Timer",
   data() {
     return {
-      msg: "",
+      msg: "  ",
     };
   },
   created() {
@@ -35,19 +35,17 @@ export default {
 
         if (distance <= 0) {
           clearInterval(x);
-          this.msg = "";
+          this.msg = " ";
           this.$emit('timer-finished')
         }
-
       }, 1000);
     },
   },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1 {
-  margin: 1rem;
+.timer{
+  text-align: center;
+  min-height:2rem;
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
   <div class="game">
-    <div v-if="loading" class="loading">Loading...</div>
-
     <div v-if="error" class="error">
       {{ error }}
     </div>
@@ -24,7 +22,7 @@ export default {
       error: null,
       startTime: null,
       score: null,
-      timerKey: 0
+      timerKey: 0,
     };
   },
   components: {
@@ -56,13 +54,14 @@ export default {
       if (this.data.UserAnswersIds.length < 5) {
         var data = {};
         data.QuestionId = this.picture.id;
+        if (selectedAnswerText === undefined) selectedAnswerText = "";
         data.Answer = selectedAnswerText;
         data.msElapsed = this.getTimeElapsed();
         this.data.UserAnswersIds.push(data);
         this.fetchData();
         this.forceRerenderTimer();
       } else {
-        window.localStorage.setItem("pictures", JSON.stringify(this.data))
+        window.localStorage.setItem("pictures", JSON.stringify(this.data));
         this.$router.push("/score/new");
       }
     },
@@ -93,5 +92,13 @@ export default {
 <style scoped>
 .game {
   max-width: 50rem;
+}
+.timer {
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+.loading {
+  text-align: center;
 }
 </style>

@@ -73,6 +73,10 @@ namespace FastGuess
                 {
                     spa.UseVueCli(npmScript: "serve");
                 }
+                else
+                {
+                    spa.UseVueCli(npmScript: "build-production");
+                }
 
             });
         }

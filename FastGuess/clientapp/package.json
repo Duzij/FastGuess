@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-production": "NODE_ENV=production vue-cli-service build --mode production"
+    "build-production": "vue-cli-service build --mode production"
   },
   "dependencies": {
     "awsm.css": "^3.0.7",

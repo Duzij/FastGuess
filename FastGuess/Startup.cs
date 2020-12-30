@@ -64,20 +64,12 @@ namespace FastGuess
 
             app.UseSpa(spa =>
             {
-                if (env.IsDevelopment())
-                    spa.Options.SourcePath = "ClientApp";
-                else
-                    spa.Options.SourcePath = Configuration.GetSection("Spa").GetValue<string>("path");
-
-                if (env.IsDevelopment())
-                {
-                    spa.UseVueCli(npmScript: "serve");
-                }
-                else
-                {
-                    spa.UseVueCli(npmScript: "build-production");
-                }
-
+#if DEBUG 
+                spa.Options.SourcePath = "ClientApp";
+                spa.UseVueCli(npmScript: "serve");
+#else
+                spa.Options.SourcePath = Configuration.GetSection("Spa").GetValue<string>("path");
+#endif
             });
         }
     }

@@ -1,10 +1,17 @@
 <template>
   <div>
     <h1>Submit your score</h1>
-    <hr/>
-    <form @submit.prevent="submitScore" class="new_score_form">
+    <hr />
+    <form
+      @submit.prevent="submitScore"
+      class="new_score_form"
+    >
       <label>Nickname</label>
-      <input required type="text" v-model="nickname" />
+      <input
+        required
+        type="text"
+        v-model="nickname"
+      />
       <button type="submit">Submit</button>
     </form>
   </div>
@@ -24,19 +31,19 @@ export default {
       const data = {
         nickname: this.nickname,
         answers: JSON.parse(pictures),
-        date: null
+        date: null,
       };
 
       console.log(data);
 
-      fetch("http://localhost:5000/api/score", {
+      fetch(this.$apiUrl + "/api/score", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       })
-        .then((response) =>  console.log(response))
+        .then((response) => console.log(response))
         .then((data) => {
           console.log("Success:", data);
           this.$router.push("/score");

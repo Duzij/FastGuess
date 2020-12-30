@@ -12,7 +12,6 @@
     <router-view class="app" />
   </div>
 </template>
-
 <style>
 #app {
   -webkit-font-smoothing: antialiased;

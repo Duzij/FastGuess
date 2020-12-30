@@ -1,12 +1,24 @@
 <template>
   <div class="game">
-    <div v-if="error" class="error">
+    <div
+      v-if="error"
+      class="error"
+    >
       {{ error }}
     </div>
 
-    <div v-if="picture" class="content">
-      <Timer :key="timerKey" v-on:timer-finished="getNextPicture" />
-      <Picture v-bind:picture="picture" v-on:answer-selected="getNextPicture" />
+    <div
+      v-if="picture"
+      class="content"
+    >
+      <Timer
+        :key="timerKey"
+        v-on:timer-finished="getNextPicture"
+      />
+      <Picture
+        v-bind:picture="picture"
+        v-on:answer-selected="getNextPicture"
+      />
     </div>
   </div>
 </template>
@@ -68,7 +80,8 @@ export default {
     fetchData() {
       this.error = null;
       this.loading = true;
-      fetch("http://localhost:5000/api/picture", {
+
+      fetch(this.$apiUrl+"/api/picture", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

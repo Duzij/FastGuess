@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     getScore() {
-      fetch("http://localhost:5000/api/score", {
+      fetch(this.$apiUrl+"/api/score", {
         method: "GET", // or 'PUT'
       })
         .then((response) => response.json())

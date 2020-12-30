@@ -28,25 +28,26 @@ export default {
       //pictures json
       var pictures = window.localStorage.getItem("pictures");
 
+      if(pictures === undefined)
+      {
+        this.$router.push("/");
+      }
+
       const data = {
         nickname: this.nickname,
         answers: JSON.parse(pictures),
         date: null,
       };
 
-      console.log(data);
-
       fetch(this.$apiUrl + "/api/score", {
-        method: "POST", // or 'PUT'
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       })
-        .then((response) => console.log(response))
-        .then((data) => {
-          console.log("Success:", data);
-          this.$router.push("/score");
+        .then((response) => {
+          if (response.status === 200) this.$router.push("/score");
         })
         .catch((error) => {
           console.error("Error:", error);

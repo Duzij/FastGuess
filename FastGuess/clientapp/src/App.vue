@@ -34,13 +34,13 @@ h1 {
   align-items: center;
   align-self: center;
 }
-a {
-  color: black !important;
-}
 .active {
   background-color: black;
   color: white !important;
   padding: 0.5rem 1rem;
   text-decoration: none;
+}
+.loading {
+  text-align: center;
 }
 </style>

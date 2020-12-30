@@ -1,9 +1,11 @@
 <template>
   <div class="game">
+    <div v-if="loading" class="loading">Loading...</div>
+
     <div
       v-if="error"
       class="error"
-    >
+    > 
       {{ error }}
     </div>
 
@@ -33,7 +35,6 @@ export default {
       picture: null,
       error: null,
       startTime: null,
-      score: null,
       timerKey: 0,
     };
   },
@@ -42,14 +43,10 @@ export default {
     Picture,
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
-
     this.data = { UserAnswersIds: [] };
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData",
   },
   methods: {
@@ -81,8 +78,8 @@ export default {
       this.error = null;
       this.loading = true;
 
-      fetch(this.$apiUrl+"/api/picture", {
-        method: "POST", // or 'PUT'
+      fetch(this.$apiUrl + "/api/picture", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -110,8 +107,5 @@ export default {
   justify-content: center;
   justify-items: center;
   align-items: center;
-}
-.loading {
-  text-align: center;
 }
 </style>

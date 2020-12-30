@@ -1,14 +1,21 @@
 <template>
   <div class="score">
     <h1>ScoreBoard</h1>
-    <hr/>
+    <hr />
+    <div
+      v-if="loading"
+      class="loading"
+    >Loading...</div>
     <table>
       <tr>
         <th>Nickname</th>
         <th>Date</th>
         <th>Score</th>
       </tr>
-      <tr v-for="user in data" v-bind:key="user.id">
+      <tr
+        v-for="user in data"
+        v-bind:key="user.id"
+      >
         <td>{{ user.nickname }}</td>
         <td>
           {{
@@ -29,36 +36,35 @@ export default {
   data() {
     return {
       data: "",
+      loading: false,
     };
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
+    this.loading = true;
     this.getScore();
   },
   watch: {
-    // call again the method if the route changes
     $route: "getScore",
   },
   methods: {
     getScore() {
-      fetch(this.$apiUrl+"/api/score", {
+      fetch(this.$apiUrl + "/api/score", {
         method: "GET", // or 'PUT'
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data);
           this.data = data;
         })
         .catch((error) => {
           console.error("Error:", error);
         });
+      this.loading = false;
     },
   },
 };
 </script>
 <style scoped>
-.score{
+.score {
   display: inline-flex;
   flex-direction: column;
   justify-content: center;

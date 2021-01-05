@@ -1,12 +1,26 @@
 <template>
   <div class="game">
-    <div v-if="error" class="error">
+    <div v-if="loading" class="loading">Loading...</div>
+
+    <div
+      v-if="error"
+      class="error"
+    > 
       {{ error }}
     </div>
 
-    <div v-if="picture" class="content">
-      <Timer :key="timerKey" v-on:timer-finished="getNextPicture" />
-      <Picture v-bind:picture="picture" v-on:answer-selected="getNextPicture" />
+    <div
+      v-if="picture"
+      class="content"
+    >
+      <Timer
+        :key="timerKey"
+        v-on:timer-finished="getNextPicture"
+      />
+      <Picture
+        v-bind:picture="picture"
+        v-on:answer-selected="getNextPicture"
+      />
     </div>
   </div>
 </template>
@@ -21,7 +35,6 @@ export default {
       picture: null,
       error: null,
       startTime: null,
-      score: null,
       timerKey: 0,
     };
   },
@@ -30,14 +43,10 @@ export default {
     Picture,
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
-
     this.data = { UserAnswersIds: [] };
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData",
   },
   methods: {
@@ -68,8 +77,9 @@ export default {
     fetchData() {
       this.error = null;
       this.loading = true;
-      fetch("http://localhost:5000/api/picture", {
-        method: "POST", // or 'PUT'
+
+      fetch(this.$apiUrl + "/api/picture", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -97,8 +107,5 @@ export default {
   justify-content: center;
   justify-items: center;
   align-items: center;
-}
-.loading {
-  text-align: center;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="score">
-    <h1>ScoreBoard</h1>
+    <h2>ScoreBoard</h2>
     <hr/>
     <table>
       <tr>

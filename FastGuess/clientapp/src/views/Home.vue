@@ -10,7 +10,7 @@
     </p>
     <div class="begin">
       <h3>Let's begin :)</h3>
-      <a href="/game">New game</a>
+      <router-link :to="{path:'game'}">New game</router-link>
     </div>
   </div>
 </template>

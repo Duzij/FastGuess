@@ -7,7 +7,7 @@
              class="error">
             {{ error }}
         </div>
-        <table>
+        <table v-if="!loading">
             <tr>
                 <th>Nickname</th>
                 <th>Date</th>
@@ -62,6 +62,7 @@
                         this.data = data;
                     })
                     .catch((error) => {
+                        this.error = "Something went wrong :(";
                         console.error("Error:", error);
                     });
             },

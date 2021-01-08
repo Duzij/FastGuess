@@ -25,9 +25,19 @@ export default {
   components: {
     Answer,
   },
+  created() {
+    window.addEventListener("keyup", (event) => {
+      if (event.key === "x") {
+        this.$emit("answer-selected", this.picture.answers[0].answerText);
+      } else if (event.key === "c") {
+        this.$emit("answer-selected", this.picture.answers[1].answerText);
+      } else if (event.key === "v") {
+        this.$emit("answer-selected", this.picture.answers[2].answerText);
+      }
+    });
+  },
 };
 </script>
-
 
 <style>
 .picture {
